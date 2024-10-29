@@ -1,0 +1,12 @@
+# ipam
+{% for q in queryset %}{% if q.status ==  "active" and (q.assigned_object_type.app_label == 'ipam') and (q.assigned_object_type.name == 'interface') %}#{{ q.assigned_object.mac_address }}#{{ q.address }}
+{% endif %}{% endfor %}
+
+# dcim or virtualization
+{% for q in queryset %}{% if q.status ==  "active" and (q.assigned_object_type.app_label == 'dcim' or q.assigned_object_type.app_label == 'virtualization') and (q.assigned_object_type.name == 'interface') and (q.assigned_object.mac_address) %}host h_{{loop.index}} {hardware ethernet {{ q.assigned_object.mac_address }}; fixed-address {{ q.address.ip }}; } # {{ q.assigned_object.device }}{{ q.assigned_object.virtual_machine }}:{{ q.assigned_object }}
+{% endif %}{% endfor %}
+
+
+### debug
+{% for q in queryset %}{% if q.status ==  "active" %}#{{ q.assigned_object_type.app_label }}#{{ q.address }}
+{% endif %}{% endfor %}

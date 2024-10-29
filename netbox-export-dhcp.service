@@ -1,0 +1,15 @@
+[Unit]
+Description=Export DHCP records from NetBox
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/env python /etc/dhcp/netbox-export-dhcp.py
+Restart=always
+RestartSec=5
+User=root
+Environment=PYTHONUNBUFFERED=1
+WorkingDirectory=/etc/dhcp
+
+[Install]
+WantedBy=multi-user.target
