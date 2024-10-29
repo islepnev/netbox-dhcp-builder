@@ -1,0 +1,7 @@
+__pycache__
+configuration.py
+dhclient.d
+dhclient-eth0.conf
+dhclient-exit-hooks.d
+dhcpd6.conf
+dhcpd-*-hosts.conf
