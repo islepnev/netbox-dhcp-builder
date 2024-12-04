@@ -80,8 +80,8 @@ def reload_dhcpd():
     result = subprocess.run(cmd_check, capture_output=True, text=True)
 
     if result.returncode != 0:
-      logger.error(f"Command '{e.cmd}' failed with exit code {e.returncode}: "
-        f"{e.stderr.strip() if e.stderr is not None else 'No error message available'}")
+      logger.error(f"Command '{' '.join(result.args)}' failed with exit code {result.returncode}:\n"
+        f"{result.stderr.strip() if result.stderr is not None else 'No error message available'}")
       raise Exception("DHCP configuration check failed.")
 
     logger.debug("DHCP configuration check passed.")
