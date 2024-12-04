@@ -1,4 +1,6 @@
 __pycache__
+.venv
+venv
 configuration.py
 dhclient.d
 dhclient-eth0.conf
