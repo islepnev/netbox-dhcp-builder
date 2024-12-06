@@ -34,7 +34,7 @@ def setup_logging():
 
 def get_data():
   url = f"{configuration.NETBOX_API_URL}/api/ipam/ip-addresses"
-  params = {"export": "dhcp_v2"}
+  params = {"export": f"{configuration.NETBOX_TEMPLATE}"}
   headers = {"Authorization": f"Token {configuration.NETBOX_API_TOKEN}"}
 
   try:

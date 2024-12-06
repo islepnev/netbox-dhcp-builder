@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/env python /etc/dhcp/netbox-export-dhcp.py
+ExecStart=/usr/bin/env python /opt/netbox-dhcp-builder/main.py
 Restart=always
 RestartSec=5
 User=root

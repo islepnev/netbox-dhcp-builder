@@ -4,11 +4,11 @@ This project provides a setup for automatically exporting DHCP static bindings f
 
 #### Overview
 
-The script (`netbox-export-dhcp.py`) retrieves MAC-IP address static bindings from NetBox (for devices and virtual entities) and updates the local DHCP configuration file. It is designed to run as a systemd service, periodically checking for updates to the DHCP bindings and reloading the DHCP server if any changes are detected.
+The script (`main.py`) retrieves MAC-IP address static bindings from NetBox (for devices and virtual entities) and updates the local DHCP configuration file. It is designed to run as a systemd service, periodically checking for updates to the DHCP bindings and reloading the DHCP server if any changes are detected.
 
 #### Project Files
 
-1. **`netbox-export-dhcp.py`**
+1. **`main.py`**
    - **Purpose**: Main Python script to fetch DHCP reservations from NetBox.
    - **Functionality**:
      - Connects to NetBox using the REST API with an API token.
@@ -16,13 +16,13 @@ The script (`netbox-export-dhcp.py`) retrieves MAC-IP address static bindings fr
      - Safely writes DHCP entries to the local configuration file. If any changes to the configuration files are detected, it reloads the DHCP service.
      - Logs events via `syslog`.
 
-2. **`netbox-export-dhcp.service`**
+2. **`netbox-dhcp-builder.service`**
    - **Purpose**: Systemd service file for automating the script execution.
    - **Functionality**:
      - Defines a `simple` service that runs the Python script upon startup.
      - Restarts if it encounters issues, with a delay of 5 seconds between restarts.
 
-3. **`netbox-export-dhcp.template`**
+3. **`netbox-export-template.j2`**
    - **Purpose**: NetBox export template for DHCP bindings.
    - **Functionality**:
      - Uses Jinja2 syntax to format output as an ISC DHCPD configuration file.
@@ -59,7 +59,7 @@ The script (`netbox-export-dhcp.py`) retrieves MAC-IP address static bindings fr
      - Fill in the required fields as follows:
        - **Name**: `dhcp_v2` (must be exactly as shown).
        - **Object types**: `IPAM > IP Address`.
-       - **Template code**: Insert the contents of `netbox-export-dhcp.template`.
+       - **Template code**: Insert the contents of `netbox-export-template.j2`.
        - **File extension**: `.txt`.
 
      After saving the template, verify your settings in NetBox by navigating to **IPAM**, then **IP Addresses**. Click the **Export** button and select `dhcp_v2`. You should see the configured addresses displayed line by line.
@@ -71,16 +71,16 @@ The script (`netbox-export-dhcp.py`) retrieves MAC-IP address static bindings fr
 5. **Test the Setup by Running the Script Manually**
      - Execute the following command:
        ```bash
-       python netbox-export-dhcp.py
+       python main.py
        ```
      - The script should output the number of configured bindings. You can terminate the process with **Ctrl-C**.
 
 6. **Install the Systemd Service**:
-   - Place `netbox-export-dhcp.service` in `/etc/systemd/system/`.
+   - Place `netbox-dhcp-builder.service` in `/etc/systemd/system/`.
    - Enable and start the service:
      ```bash
-     sudo systemctl enable netbox-export-dhcp
-     sudo systemctl start netbox-export-dhcp
+     sudo systemctl enable netbox-dhcp-builder
+     sudo systemctl start netbox-dhcp-builder
      ```
 
 
@@ -88,7 +88,7 @@ The script (`netbox-export-dhcp.py`) retrieves MAC-IP address static bindings fr
 
 Logs are directed to `syslog` for monitoring. Review logs with:
 ```bash
-journalctl -u netbox-export-dhcp
+journalctl -u netbox-dhcp-builder
 ```
 
 #### Prerequisites
