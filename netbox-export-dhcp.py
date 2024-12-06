@@ -34,11 +34,11 @@ def setup_logging():
 
 def get_data():
   url = f"{configuration.NETBOX_API_URL}/api/ipam/ip-addresses"
-  params = {"export": "dhcp_v1"}
+  params = {"export": "dhcp_v2"}
   headers = {"Authorization": f"Token {configuration.NETBOX_API_TOKEN}"}
 
   try:
-    api_timeout = 10
+    api_timeout = 60
     response = requests.get(url, headers=headers, params=params, timeout=api_timeout)
     response.raise_for_status()  # Raises HTTPError if status code is 4xx or 5xx
 
