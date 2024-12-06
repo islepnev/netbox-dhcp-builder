@@ -57,12 +57,12 @@ The script (`netbox-export-dhcp.py`) retrieves MAC-IP address static bindings fr
    - **Add Template to NetBox**
      - Navigate to the **Customization** section and select **Export Templates**.
      - Fill in the required fields as follows:
-       - **Name**: `dhcp_v1` (must be exactly as shown).
+       - **Name**: `dhcp_v2` (must be exactly as shown).
        - **Object types**: `IPAM > IP Address`.
        - **Template code**: Insert the contents of `netbox-export-dhcp.template`.
        - **File extension**: `.txt`.
 
-     After saving the template, verify your settings in NetBox by navigating to **IPAM**, then **IP Addresses**. Click the **Export** button and select `dhcp_v1`. You should see the configured addresses displayed line by line.
+     After saving the template, verify your settings in NetBox by navigating to **IPAM**, then **IP Addresses**. Click the **Export** button and select `dhcp_v2`. You should see the configured addresses displayed line by line.
 
 4. **Setup Configuration**:
    - Copy `configuration_example.py` to `configuration.py`.
